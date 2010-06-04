@@ -1,0 +1,17 @@
+Note that the images and config.xml are the same as (and copied from) the Qt Fluid Launcher demo, of which this is a Qt Quick based re-write
+
+We could expose the terminate signal to let QML kill demos from the app (but docs say it would make Symbian panic)
+
+We can track the applicatiosn launch status in QML, and show an appropriate error message. However to use native dialogs we'd need to show the error message from the C++ side (it depends on if you want to do that). I don't think we currently handle the error of 'executable doesn't exist'.
+
+We can have the QML delegate launch QML internally by setting a Loader's source if qml=true in the XML (and the filename would be a .qml)
+
+We can implement the slideshow functionality with just another View/Delegate/Model combo in pure QML. I don't think we need any C++ for that.
+
+If we need to set the xml/image/qml locations 'magically' the C++ can do that easy and expose the right locations as properties the same way "app" is.
+
+I haven't tried this on s60 at all. Someone should do that.
+
+While QML already exposes QApp::quit functionality, if you need WM functions (like minimize, or to back) on the device then the QuickView would have to expose them.
+
+You could have a different QML file per device to maximise the effective use of hardware - or just set up the layout with anchors and bindings such that one file works everywhere.

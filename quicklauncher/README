@@ -1,0 +1,3 @@
+This example expects to be installed to $QTDIR/demos/embedded/quicklauncher for the relative paths to other demos to work.
+
+It also requires a config.xml, and the screenshots and slides folders, from the fluidlauncher demo (in demos/embeddded/quicklauncher. These should be placed in the install dir as well (along with the QML file and the built executable).
