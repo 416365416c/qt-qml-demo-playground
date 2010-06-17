@@ -47,10 +47,12 @@
 class QuickView : public QDeclarativeView
 {
     Q_OBJECT
+    Q_PROPERTY(QUrl contentRoot READ contentRoot)
 public:
     QuickView(QWidget *parent = 0);
     ~QuickView();
 
+    QUrl contentRoot() const { return resRoot; }
 public slots:
     void launchDemo(const QString &exePath, const QString &args);
 signals:
@@ -60,6 +62,7 @@ private slots:
     void handleError(QProcess::ProcessError error);
 private:
     QProcess process;
+    QUrl resRoot;
 };
 
 #endif // QUICKVIEW_H

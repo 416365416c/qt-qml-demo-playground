@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/qml" lang="qml">
+        <file>quicklauncher.qml</file>
+        <file>pics/background.jpg</file>
+        <file>components/LauncherDelegate.qml</file>
+        <file>components/LauncherModel.qml</file>
+    </qresource>
+</RCC>

@@ -39,79 +39,26 @@
 ****************************************************************************/
 
 import Qt 4.7
+import "components"
 
 Rectangle{
     width: 800
     height: 480
-    XmlListModel{
-        id: theModel
-        source: "config.xml"
-        query: "/demolauncher/demos/example"
-        XmlRole{ name: "image"; query: "@image/string()" }
-        XmlRole{ name: "name"; query: "@name/string()" }
-        XmlRole{ name: "filename"; query: "@filename/string()" }
-        XmlRole{ name: "args"; query: "@args/string()" }
-    }
-    Component{ id: theDelegate
-        Item{
-            width: 320
-            height: 480
-            function launch(){ 
-                console.log("Launching: " + filename + args);
-                app.launchDemo(filename, args);
-            }
 
-            Rectangle {
-                anchors.fill: parent
-                anchors.margins: 4
-                z: 1
-                radius: 4
-                //TODO: Ensure that the gradient (or smooth) doesn't kill performance on devices
-                smooth: true
-                border.color: "#aaaaaa"
-                gradient: Gradient{//TODO: Can we afford the performance hit of animating this color change?
-                    GradientStop{ 
-                        position: 0.0; 
-                        color: ListView.isCurrentItem ? "lightgreen" : "lightsteelblue" 
-                        Behavior on color{ColorAnimation{}}
-                    }
-                    GradientStop{ 
-                        position: 1.0; 
-                        color: ListView.isCurrentItem ? "forestgreen": "steelblue"
-                        Behavior on color{ColorAnimation{}}
-                    }
-                }
-            }
-            Text {
-                text: name
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: parent.top
-                anchors.topMargin: 8
-                z: 3
-            }
-            Image {
-                id:img; 
-                anchors.centerIn: parent
-                smooth: true //Does it perform?
-                source: image; 
-                width: 240; 
-                height: 320; 
-                fillMode: Image.PreserveAspectFit
-                z: 2
-            }
-            MouseArea{
-                anchors.fill: parent
-                z: 5
-                onClicked: {ListView.view.currentIndex = index; launch();}
-            }
-            Keys.onReturnPressed: launch();
-        }
+    Image {
+        id: background
+        source: "pics/background.jpg"
+        fillMode: Image.TileHorizontally
+        x: -list.contentX / 2
+        width: Math.max(list.contentWidth, parent.width)
     }
+
     ListView{
+        id: list
         anchors.fill: parent
         orientation: ListView.Horizontal
-        model: theModel
-        delegate: theDelegate
+        model: LauncherModel{}
+        delegate: LauncherDelegate{}
         focus: true
     }
 }

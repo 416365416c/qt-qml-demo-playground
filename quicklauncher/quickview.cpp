@@ -43,8 +43,9 @@
 QuickView::QuickView(QWidget *parent)
     : QDeclarativeView(parent)
 {
+    resRoot = QUrl::fromLocalFile("./");//TODO: More sophisticated solution?
     this->rootContext()->setContextProperty("app", this);
-    this->setSource(QUrl::fromLocalFile("./quicklauncher.qml"));
+    this->setSource(QUrl::fromLocalFile(":/qml/quicklauncher.qml"));
     connect(&process, SIGNAL(started()),
             this, SIGNAL(demoStarted()));
     connect(&process, SIGNAL(finished(int, QProcess::ExitStatus)),

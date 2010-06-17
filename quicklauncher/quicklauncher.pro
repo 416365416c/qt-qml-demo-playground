@@ -14,3 +14,11 @@ SOURCES += main.cpp\
         quickview.cpp
 
 HEADERS  += quickview.h
+
+RESOURCES += \
+    quicklauncher.qrc
+
+OTHER_FILES += \
+    quicklauncher.qml \
+    components/LauncherDelegate.qml \
+    components/LauncherModel.qml
