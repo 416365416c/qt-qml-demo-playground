@@ -24,6 +24,7 @@ Item{
         ListElement{
             title: 'KWord Custom Doc'
             icon: 'kword.svgz'
+            icon_size: 64
             type: 'CustomWidget'//Types are either QML files or C++ exposed. I don't care
             section: 'C++ Widget'
         }
@@ -59,6 +60,8 @@ Item{
                 height: childrenRect.height
                 Image{
                     source: icon
+                    width: icon_size
+                    height: icon_size
                 }
                 Text{
                     text: title
