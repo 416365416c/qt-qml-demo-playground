@@ -3,12 +3,8 @@
 
 #include <QGraphicsProxyWidget>
 #include <qdeclarative.h>
+#include "ui_customwidget.h"
 
-namespace Ui{
-    class CustomWidget;
-}
-
-class QWidget;
 class CustomWidget : public QGraphicsProxyWidget
 {
     Q_OBJECT
@@ -16,13 +12,7 @@ public:
     explicit CustomWidget(QGraphicsObject *parent = 0);
 
 private:
-    Ui::CustomWidget *ui;
-    QWidget* widget;
-
-signals:
-
-public slots:
-
+    Ui::KWStartupWidget widget;
 };
 
 QML_DECLARE_TYPE(CustomWidget);

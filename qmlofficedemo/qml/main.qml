@@ -22,8 +22,8 @@ Item{
     ListModel{
         id: paneModel//Maybe load from XML or another file? Or even popluated by the C++ of course
         ListElement{
-            title: 'Custom Widget'
-            icon: 'qtcreator_logo_64.png'
+            title: 'KWord Custom Doc'
+            icon: 'kword.svgz'
             type: 'CustomWidget'//Types are either QML files or C++ exposed. I don't care
             section: 'C++ Widget'
         }
