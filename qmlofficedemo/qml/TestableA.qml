@@ -1,10 +1,7 @@
 import Qt 4.7
 
 Testable{
-    text: 'Blank Documents'
-
-    ListModel {
-        id: myModel
+    templatesModel: ListModel {
         ListElement {
             title: 'Blank Document'
             icon: 'document.png'
@@ -21,5 +18,4 @@ Testable{
             icon_size: 48
         }
     }
-    templatesModel: myModel
 }

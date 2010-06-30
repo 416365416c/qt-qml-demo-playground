@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     Interface* interface = new Interface(this);
     ui->setupUi(this);
     ui->declarativeView->setSource(QUrl("./qml/main.qml"));
+    ui->declarativeView->setResizeMode(QDeclarativeView::SizeRootObjectToView);
     ui->declarativeView->setFocus();
     ui->declarativeView->rootContext()->setContextObject(interface);
 }

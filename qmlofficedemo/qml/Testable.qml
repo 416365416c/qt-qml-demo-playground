@@ -1,7 +1,6 @@
 import Qt 4.7
 
 Rectangle{
-    property alias text: label.text
     property alias templatesModel: templates.model
     color: 'white'
 
@@ -68,7 +67,7 @@ Rectangle{
 
     Image {
         id: documentIcon
-        source: "document.png"
+        source: templates.model.get(templates.currentIndex).icon
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.left: splitter.right
@@ -76,6 +75,7 @@ Rectangle{
     Text {
         id: label
         font.bold: true
+        text: templates.model.get(templates.currentIndex).title
         horizontalAlignment: Text.AlignHCenter
         anchors.top: documentIcon.bottom
         anchors.right: parent.right

@@ -1,16 +1,16 @@
 import Qt 4.7
 
 Testable{
-    text: 'Envelopes'
-
-    ListModel {
-        id: myModel
+    templatesModel: ListModel {
         ListElement {
             title: 'Envelope C6'
+            icon: ''
+            icon_size: 48
         }
         ListElement {
             title: 'Envelope DL'
+            icon: ''
+            icon_size: 48
         }
     }
-    templatesModel: myModel
 }
