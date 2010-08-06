@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/" lang="english">
+        <file>words.dict</file>
+    </qresource>
+</RCC>
