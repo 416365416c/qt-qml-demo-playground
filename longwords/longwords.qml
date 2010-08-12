@@ -11,23 +11,10 @@ Item{
         rows: 5
         columns: 5
         searchString: input.text
-    }
-    Item{
-        id: gameBoard
-        width: 320
-        height: 320
-        Rectangle{
-            id: bg
-            anchors.fill: parent
-            color: "palegoldenrod"
-        }
-        Repeater{
-            model: logic.board
-            delegate: TileDelegate{property int tileSize: 64}
-        }
-    }
-    MyLineEdit{
-        id: input
+        /* Some JS functions added to facilitate this specific word game. Not
+            placed in a separate file because it is only one exposed function,
+            tightly integrated with the QML.
+        */
         function addWordsOfLength(n){
             var first = true;
             for(var i in logic.boardWords){
@@ -40,7 +27,7 @@ Item{
                 dialog.text += logic.boardWords[i];
             }
         }
-        function startEnd(){
+        function endGame(){
             if(!logic.searchStringFound){
                 dialog.text = "That word is not in this board.";
                 dialog.show();
@@ -64,15 +51,43 @@ Item{
                 dialog.text += "\nAnd here are some more long, but not longest, words:\n";
                 addWordsOfLength(bestLength-1);
                 dialog.show();
+                logic.regenerateBoard();
+                input.text = "";
             }
         }
+    }
+    Item{
+        id: gameBoard
+        width: 320
+        height: 320
+        Rectangle{
+            id: bg
+            anchors.fill: parent
+            color: "palegoldenrod"
+        }
+        Repeater{
+            model: logic.board
+            delegate: TileDelegate{property int tileSize: 64}
+        }
+    }
+    MyLineEdit{
+        id: input
         anchors.top: gameBoard.bottom
         anchors.topMargin: 18
         anchors.horizontalCenter: parent.horizontalCenter
 
         focus: true
         Keys.onPressed:if(dialog.shown){dialog.hide(); event.accepted = true;}
-        Keys.onReturnPressed: startEnd();
+        Keys.onReturnPressed: if(dialog.shown){dialog.hide();}else{logic.endGame();}//happens before onPressed
+    }
+    Text{
+        id: guide
+        opacity: logic.searchStringFound?1:0
+        Behavior on opacity{ NumberAnimation{}}
+        text: "Length: " + input.text.length
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: input.bottom
+        anchors.topMargin: 16
     }
     Row{
         spacing: 8
