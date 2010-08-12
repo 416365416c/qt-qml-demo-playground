@@ -73,7 +73,7 @@ bool WordList::isWord(const QString &string){
 //Using a C style global array since I'm using C style strings anyways
 const int WORD_MAX=200000;
 char dict[WORD_MAX][LEN_MAX];
-int idx[26*2];
+int idx[26*26];
 int numWords;
 
 void WordList::init(){
