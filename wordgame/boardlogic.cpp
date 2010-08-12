@@ -110,10 +110,12 @@ void BoardLogic::updateSearchTiles()
     QSet<int> selectSet;
     for(int i=0; i<m_rows*m_columns; i++)
         selectionTraverse(m_searchString.toLower().toAscii().data(), 0, i, &selectSet);
-    //Done with an intermediate set so that there aren't a lot of spurious signals being emitted
-    //That isn't good for QML, as they might try to animate something on a change.
+
     for(int i=0; i<m_rows*m_columns; i++)
         m_tiles.at(i)->setSelected(selectSet.contains(i));
+
+    m_searchStringFound = !selectSet.isEmpty();
+    emit searchStringFoundChanged();
 }
 
 void BoardLogic::updateBoardWords()

@@ -96,6 +96,7 @@ class BoardLogic : public QObject,public QDeclarativeParserStatus
     //the set of tiles which could be used to find that string on the board, with the current adjacency mode.
     //This if not affected by whether the specified string is a valid word or not.
     Q_PROPERTY(QString searchString READ searchString WRITE setSearchString NOTIFY searchStringChanged);
+    Q_PROPERTY(bool searchStringFound READ searchStringFound NOTIFY searchStringFoundChanged);
 
 public slots:
     //Replaces the existing tiles with another, randomly selected, set of tiles.
@@ -121,6 +122,8 @@ public:
     QString searchString() const{return m_searchString;}
     void setSearchString(QString c){if(c==m_searchString) return; m_searchString = c; emit searchStringChanged();}
 
+    bool searchStringFound(){return m_searchStringFound;}
+
     //Note that boardString and board have non-boilerplate methods
 signals:
     void rowsChanged();
@@ -129,6 +132,7 @@ signals:
     void boardWordsChanged();
     void boardChanged();
     void searchStringChanged();
+    void searchStringFoundChanged();
 private:
     int m_columns;
     int m_rows;
@@ -137,6 +141,7 @@ private:
     QString m_searchString;
     QList<Tile*> m_tiles;
     QString m_boardString;
+    bool m_searchStringFound;
 //end of boilerplate code
 public:
     BoardLogic(QObject* parent=0):
