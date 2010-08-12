@@ -24,4 +24,8 @@ RESOURCES += \
 
 OTHER_FILES += \
     allwords.dict \
-    notwords.dict
+    notwords.dict \
+    wordsInTest.1 \
+    wordsInTest.2 \
+    wordsInTest.3 \
+    wordsInTest.4

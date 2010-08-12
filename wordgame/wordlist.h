@@ -44,11 +44,18 @@
 
 #include <QObject>
 #include <QSet>
-#include <QString>
+#include <QStringList>
 
 class WordList : public QObject
 {
     Q_OBJECT
+    /*
+       This object provides a set of functions that word games might need.
+       They use a built in word list.
+
+       When you import the WordGame module, it is added as the 'wordList'
+       item in the root QML context.
+    */
 public:
     explicit WordList(QObject *parent = 0);
     static WordList *instance();
@@ -62,12 +69,14 @@ public slots:
     //to str so that passing the resultant word to isWord would return true.
     bool isPartialWord(const QString &str);
     //Returns the set of words you can form with the letters in str.
-    //This is really slow, and is not currently put in another
-    //TODO: ME
+    //Useful for anagrams or games where you create words from a set of letters
+    //This is probably slow, and is not currently put in another thread
+    QStringList wordsIn(const QString &str);
 private:
     void init();
     static WordList* m_instance;
     QSet<QString> m_words;
+    void wordsInHelper(const QString &given, const QString &left, QStringList &ret);
 };
 
 #endif // WORDLIST_H

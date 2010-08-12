@@ -1,0 +1,15 @@
+To launch the game, open longwords.qml with the QML viewer application.
+
+You will need to have the WordGame module installed for this to work. If you get an error similar to the following when you try to run longwords.qml, then that module is not installed:
+file:///path/to/where/you/put/it/longwords/longwords.qml:41:1: module "Qt.labs.wordgame" is not installed
+     import Qt.labs.wordgame 1.0 as WordGame
+          ^
+
+Design notes
+---
+
+Note that the logic is an element, not a separate JS file. This is because there is a relatively small amount of JS require, and most of the logic is in the C++ module.
+To keep it together, the JS functions were placed inside that element. That element could be abstracted out to a separate QML file also.
+
+The game board is managed by a repeater and custom delegate, instead of JS instantiation and manipulation of geometry. This is because this game does not have much movement, and for
+many board games you could construct the underlying board this way (although pieces might have to move on top in a more dynamic fashion).

@@ -47,12 +47,13 @@
 
 class Tile : public QObject
 {
-    //Just some simple properties describing a tile
+    //Just some simple properties describing a tile with a letter on it
 
     Q_OBJECT
     Q_PROPERTY(int row READ row CONSTANT);
     Q_PROPERTY(int column READ col CONSTANT);
     Q_PROPERTY(QString letter READ letter CONSTANT);
+    //Selection state is controlled by the BoardLogic object, see search String
     Q_PROPERTY(bool selected READ isSelected NOTIFY selectedChanged);
 
 public:
@@ -79,6 +80,7 @@ class BoardLogic : public QObject,public QDeclarativeParserStatus
     Q_INTERFACES(QDeclarativeParserStatus)
     /*
         For a board-based word game. If you don't have a board, don't make one of these.
+        You can use WordList on its own for those cases.
     */
     //Numbers of columns on the board
     Q_PROPERTY(int columns READ columns WRITE setColumns NOTIFY columnsChanged);
@@ -87,15 +89,17 @@ class BoardLogic : public QObject,public QDeclarativeParserStatus
     //Number of words found in the board
     Q_PROPERTY(int wordCount READ wordCount NOTIFY wordCountChanged);
     //The board concatenated into one string. You could break it into letters yourself if you want
+    //Setting this property allows you to use a specific, instead of random, board.
     Q_PROPERTY(QString boardString READ boardString WRITE setBoardString NOTIFY boardChanged);
-    //A list of QObjects suitable for use as a model
+    //A list of QObjects suitable for use as a model in QML
     Q_PROPERTY(QDeclarativeListProperty<Tile> board READ board NOTIFY boardChanged);
     //A list of words in the board
     Q_PROPERTY(QStringList boardWords READ boardWords NOTIFY boardWordsChanged);
-    //By setting a searchString, Tiles in boardTiles get updated to have 'selected' be set to true if and only if it is in
+    //By setting a searchString, Tiles in board get updated to have 'selected' be set to true if and only if it is in
     //the set of tiles which could be used to find that string on the board, with the current adjacency mode.
     //This if not affected by whether the specified string is a valid word or not.
     Q_PROPERTY(QString searchString READ searchString WRITE setSearchString NOTIFY searchStringChanged);
+    //searchStringFound is true when the searchString can be found in at least one place on the board.
     Q_PROPERTY(bool searchStringFound READ searchStringFound NOTIFY searchStringFoundChanged);
 
 public slots:
@@ -150,7 +154,7 @@ public:
 
     void setBoardString(const QString &);
     QString boardString();
-    virtual void componentComplete();
+    virtual void componentComplete();//pure virtual from QDeclarativeParserStatus, for costly initialization
     virtual void classBegin(){}//unused pure virtual from QDeclarativeParserStatus
 
 private slots:

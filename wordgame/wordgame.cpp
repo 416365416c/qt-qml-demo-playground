@@ -40,6 +40,12 @@
 
 #include "wordgame.h"
 #include "boardlogic.h"
+#include "wordlist.h"
+
+void WordGame::initializeEngine(QDeclarativeEngine *engine, const char *uri)
+{
+    engine->rootContext()->setContextProperty("wordList", WordList::instance());
+}
 
 void WordGame::registerTypes(const char *uri)
 {
