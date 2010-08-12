@@ -79,7 +79,8 @@ int numWords;
 void WordList::init(){
     //Create 'Binary Tree'
     QFile in(":/words.dict");//Assumed to be in alphabetical order already
-    Q_ASSERT(in.open(QFile::Text | QFile::ReadOnly));
+    bool opened = in.open(QFile::Text | QFile::ReadOnly);
+    Q_ASSERT(opened);
     int c=0;
     char cur[LEN_MAX];
     char curIdx[2];//Assumed all words have at least 2 letters
