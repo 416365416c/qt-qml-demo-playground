@@ -46,6 +46,8 @@
 
 void BoardLogic::componentComplete(){
     //qDebug() << "Woohoo!  Now to do my costly initialization";
+    QTime time;
+    qsrand(time.msecsTo(QTime::currentTime()));
     connect(this, SIGNAL(boardChanged()),
             this, SLOT(updateBoardWords()));
     connect(this, SIGNAL(searchStringChanged()),
@@ -56,8 +58,6 @@ void BoardLogic::componentComplete(){
         updateBoardWords();//Signal wasn't caught
     if(m_searchString != QString())
         updateSearchTiles();//Signal wasn't caught
-    QTime time;
-    qsrand(time.msecsTo(QTime::currentTime()));
 }
 
 void BoardLogic::regenerateBoard()
