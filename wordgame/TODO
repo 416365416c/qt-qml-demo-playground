@@ -1,13 +1,9 @@
-For the first version, required features include:
--Bag Results
--Basic Letter frequencies
--Flesh out the readme a bit more.
-For the next version, planned enhancements include:
+For future versions, possible enhancements include:
 -Multidimensional support
 -Multiple adjcency modes (None, Strong, Weak).
 -Multithreaded valid word generation
 -Other performance enhancements where feasible
--Better, and possible configurable, letter frequencies.
+-Letter frequencies, possibly configurable.
 -Sort boardwords by length, to easily find the biggest
 -Investigate using a set instead of a list for boardWords
 -More memory efficient, without sacrificing (much) speed.

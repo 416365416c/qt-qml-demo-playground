@@ -37,22 +37,30 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+import Qt 4.7
 
-#include "wordgame.h"
-#include "boardlogic.h"
-#include "wordlist.h"
-
-void WordGame::initializeEngine(QDeclarativeEngine *engine, const char *uri)
-{
-    engine->rootContext()->setContextProperty("wordList", WordList::instance());
+TextInput{
+    color: props.textColor
+    maximumLength: 12//40,000 iterations found nothing longer than 11
+    width: phantomText.width + 4
+    Text{id: phantomText; opacity: 0; text: "WWWWWWWWWWWW"}
+    font.pixelSize: props.textSize
+    font.family: props.textFamily
+    font.capitalization: Font.AllUppercase
+    Rectangle{
+        anchors.fill: parent
+        anchors.margins: -4
+        z:-1
+        radius: 4
+        color: 'white'
+        border.color: 'lightsteelblue'
+    }
+    Rectangle{
+        anchors.fill: parent
+        anchors.margins: -5
+        z:-1
+        radius: 4
+        color: 'white'
+        border.color: 'steelblue'
+    }
 }
-
-void WordGame::registerTypes(const char *uri)
-{
-    qmlRegisterType<BoardLogic>(uri, 1, 0, "BoardLogic");
-    qmlRegisterUncreatableType<Tile>(uri,1,0,"Tile",Tile::tr("Only the BoardLogic element can generate tiles"));
-}
-
-
-Q_EXPORT_PLUGIN(WordGame);
-

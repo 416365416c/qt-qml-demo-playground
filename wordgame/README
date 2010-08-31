@@ -1,3 +1,20 @@
 The included dictionary is the ENABLE2K dictionary, a public domain word list suitable for use in most word games.
 
-The rest is LGPL2.
+The rest is BSD licensed, same as the Qt Examples. For more information, see the examples directory in the Qt source tree.
+
+Design Notes
+---
+Since there is no good solution provided for documenting QML modules just yet, the documentation for each property has
+been placed by its declaration in the header files.
+
+The header files (*.h) have been documented and kept simple so as to serve as an example of designing C++ code for use by QML.
+The source files (*.cpp) have not. They do not have extensive documentation or any special attempt at making the code extra
+readable. Since the source files are not part of the design, it is recommended that you not worry about them and instead
+peruse the design as a black box (like you would have to if you were a QML-only developer), reading just the header files.
+
+The design attempts to follow the general principles of the blog post on Qt labs http://labs.trolltech.com/blogs/2010/07/20/designing-code-for-qml-uis/
+This includes:
+-A focus on Properties over imperative logic, for example the 'searchString' property instead of explict setters,
+-Use of QObjects to encapsulate various parts of the functionality, BoardLogic, WordList and Tile
+-NOTIFY signals for all property changes.
+-Unit testing before writing QML code.

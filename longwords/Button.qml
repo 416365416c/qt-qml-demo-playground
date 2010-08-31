@@ -37,22 +37,38 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+import Qt 4.7
 
-#include "wordgame.h"
-#include "boardlogic.h"
-#include "wordlist.h"
+Rectangle {
+    id: container
 
-void WordGame::initializeEngine(QDeclarativeEngine *engine, const char *uri)
-{
-    engine->rootContext()->setContextProperty("wordList", WordList::instance());
+    property string text: "Button"
+
+    signal clicked
+
+    SystemPalette{id:activePalette}
+    width: buttonLabel.width + 20; height: buttonLabel.height + 6
+    smooth: true
+    border { width: 1; color: Qt.darker(activePalette.button) }
+    radius: 8
+    color: activePalette.button
+
+    gradient: Gradient {
+        GradientStop {
+            position: 0.0
+            color: {
+                if (mouseArea.pressed)
+                    return activePalette.dark
+                else
+                    return activePalette.light
+            }
+        }
+        GradientStop { position: 1.0; color: activePalette.button }
+    }
+
+    MouseArea { id: mouseArea; anchors.fill: parent; onClicked: container.clicked() }
+
+    Text {
+        id: buttonLabel; text: container.text; anchors.centerIn: container; color: activePalette.buttonText
+    }
 }
-
-void WordGame::registerTypes(const char *uri)
-{
-    qmlRegisterType<BoardLogic>(uri, 1, 0, "BoardLogic");
-    qmlRegisterUncreatableType<Tile>(uri,1,0,"Tile",Tile::tr("Only the BoardLogic element can generate tiles"));
-}
-
-
-Q_EXPORT_PLUGIN(WordGame);
-

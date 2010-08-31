@@ -37,22 +37,24 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+import Qt 4.7
 
-#include "wordgame.h"
-#include "boardlogic.h"
-#include "wordlist.h"
-
-void WordGame::initializeEngine(QDeclarativeEngine *engine, const char *uri)
-{
-    engine->rootContext()->setContextProperty("wordList", WordList::instance());
+Rectangle{
+    color: 'blanchedalmond'
+    width: tileSize-2
+    height: tileSize-2
+    radius: 4
+    x: column * tileSize
+    y: row * tileSize
+    Behavior on x{SmoothedAnimation{velocity:100}}
+    Behavior on y{SmoothedAnimation{velocity:100}}
+    //TODO: Blurred transparent lightgoldenrodyellow to get a glow effect for highlight?
+    Text{
+        text: letter
+        anchors.centerIn: parent
+        color: selected?'goldenrod':'burlywood'
+        Behavior on color{ColorAnimation{}}
+        font.pixelSize: tileSize - 4
+        font.capitalization: Font.AllUppercase
+    }
 }
-
-void WordGame::registerTypes(const char *uri)
-{
-    qmlRegisterType<BoardLogic>(uri, 1, 0, "BoardLogic");
-    qmlRegisterUncreatableType<Tile>(uri,1,0,"Tile",Tile::tr("Only the BoardLogic element can generate tiles"));
-}
-
-
-Q_EXPORT_PLUGIN(WordGame);
-

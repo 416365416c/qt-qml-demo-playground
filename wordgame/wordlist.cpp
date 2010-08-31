@@ -53,7 +53,8 @@ WordList::WordList(QObject *parent) :
 }
 
 WordList* WordList::m_instance = 0;
-WordList* WordList::instance(){
+WordList* WordList::instance()
+{
     if(m_instance)
         return m_instance;
     else
@@ -66,20 +67,29 @@ bool WordList::isPartialWord(const QString &c)
     return isPartialWord(c.toAscii().toLower().data());
 }
 
-bool WordList::isWord(const QString &string){
+bool WordList::isWord(const QString &string)
+{
     return m_words.contains(string.toLower());
+}
+
+QStringList WordList::wordsIn(const QString &str)
+{
+    QStringList ret;
+    wordsInHelper(QLatin1String(""), str, ret);
+    return ret;
 }
 
 //Using a C style global array since I'm using C style strings anyways
 const int WORD_MAX=200000;
 char dict[WORD_MAX][LEN_MAX];
-int idx[26*2];
+int idx[26*26];
 int numWords;
 
 void WordList::init(){
     //Create 'Binary Tree'
     QFile in(":/words.dict");//Assumed to be in alphabetical order already
-    Q_ASSERT(in.open(QFile::Text | QFile::ReadOnly));
+    bool opened = in.open(QFile::Text | QFile::ReadOnly);
+    Q_ASSERT(opened);
     int c=0;
     char cur[LEN_MAX];
     char curIdx[2];//Assumed all words have at least 2 letters
@@ -115,4 +125,23 @@ bool WordList::isPartialWord(char *c)
     int i = idx[(c[0]-'a') * 26 + (c[1]-'a')];
     for(i; i<numWords && strncmp(dict[i],c,l) < 0; i++){};
     return (strncmp(dict[i],c,l) == 0);
+}
+
+
+void WordList::wordsInHelper(const QString &given, const QString &left, QStringList &ret)
+{
+    for(int i=0; i<left.length(); i++){
+        QString part = given + left[i];
+        if(isPartialWord(part)){
+            if(isWord(part)){
+                if(ret.contains(part))
+                    return;//We've hit a duplicate letter arrangement
+                ret << part;
+            }
+            QString nowLeft(left);
+            nowLeft.remove(i,1);
+            wordsInHelper(part, nowLeft, ret);
+        }
+
+    }
 }

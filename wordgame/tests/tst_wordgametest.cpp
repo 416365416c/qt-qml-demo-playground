@@ -57,6 +57,8 @@ private Q_SLOTS:
     void cleanupTestCase();
     void isWordTest();
     void isWordTest_data();
+    void wordsInTest();
+    void wordsInTest_data();
     void validBoardTest();
     void isValidTest();
     void selectionTest();
@@ -116,6 +118,39 @@ void WordGameTest::isWordTest_data()
     QTest::newRow("valid") << QString("allwords.dict") << true;
     QTest::newRow("invalid") << QString("notwords.dict") << false;
     QTest::newRow("dictionary") << QString("words.dict") << true;
+}
+
+void WordGameTest::wordsInTest()
+{
+    QFETCH(QString, file);
+    QFile in(file);
+    QVERIFY(in.open(QFile::Text | QFile::ReadOnly));
+    QTextStream stream(&in);
+    QString line = stream.readLine().trimmed();
+    QString firstLine = line;
+    QStringList ret = list->wordsIn(line);
+    while (!line.isNull()){
+        line = stream.readLine().trimmed();
+        if(line.length()<2)//don't check the blank line at the end
+            continue;
+        if(!ret.contains(line,Qt::CaseInsensitive))
+            qDebug() << "It didn't find" << line << "in" << firstLine;
+        QVERIFY(ret.contains(line,Qt::CaseInsensitive));
+        QVERIFY(list->isWord(line));
+        QCOMPARE(ret.removeAll(line), 1);
+    }
+    if(ret.count())
+        qDebug() << "It also found" << ret << "in" << firstLine;
+    QCOMPARE(ret.count(), 0);
+}
+
+void WordGameTest::wordsInTest_data()
+{
+    QTest::addColumn<QString>("file");
+    QTest::newRow("simple") << QString("wordsInTest.1");
+    QTest::newRow("none") << QString("wordsInTest.2");
+    QTest::newRow("complex") << QString("wordsInTest.3");
+    QTest::newRow("doubleLetter") << QString("wordsInTest.4");
 }
 
 void WordGameTest::validBoardTest()
