@@ -76,7 +76,7 @@ Item {
 
     Rectangle {
         id: content
-        opacity: layout == "noheader" ? 0 : 1
+        opacity: slideLayout == "noheader" ? 0 : 1
         anchors.top: header.bottom
         anchors.bottom: footer.top
         anchors.left: parent.left
