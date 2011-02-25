@@ -51,6 +51,7 @@ void WordGame::initializeEngine(QDeclarativeEngine *engine, const char *uri)
 void WordGame::registerTypes(const char *uri)
 {
     qmlRegisterType<BoardLogic>(uri, 1, 0, "BoardLogic");
+    qmlRegisterType<BoardLogic,1>(uri,1,1,"BoardLogic");
     qmlRegisterType<Letters>(uri, 1, 1, "Letters");
     qmlRegisterUncreatableType<Tile>(uri,1,0,"Tile",Tile::tr("Only the BoardLogic element can generate tiles"));
 }
