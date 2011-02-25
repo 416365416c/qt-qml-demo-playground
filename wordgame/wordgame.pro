@@ -14,14 +14,16 @@ INSTALLS += target qmldir
 SOURCES += \
     wordgame.cpp \
     wordlist.cpp \
-    boardlogic.cpp
+    boardlogic.cpp \
+    letters.cpp
 
 OTHER_FILES=qmldir
 
 HEADERS += \
     wordgame.h \
     wordlist.h \
-    boardlogic.h
+    boardlogic.h \
+    letters.h
 
 RESOURCES += \
     dictionary.qrc

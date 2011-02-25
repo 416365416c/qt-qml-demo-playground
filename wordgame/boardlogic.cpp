@@ -43,6 +43,7 @@
 
 #include "boardlogic.h"
 #include "wordlist.h"
+#include "letters.h"
 
 void BoardLogic::componentComplete(){
     //qDebug() << "Woohoo!  Now to do my costly initialization";
@@ -67,8 +68,14 @@ void BoardLogic::regenerateBoard()
     m_tiles = QList<Tile*>();
     m_boardString = QString();
     for(int i=0; i<m_rows*m_columns; i++){
-        QString letter = QChar(qrand() % 26 + 'a');
-        m_tiles << new Tile(i/m_columns, i%m_columns, letter, this);
+        QString letter;
+        if(m_letters){
+            letter = m_letters->generateCharacters(1);
+            m_tiles << new Tile(i/m_columns, i%m_columns, letter, m_letters->scoreWord(letter), this);
+        }else{
+            letter = QChar(qrand() % 26 + 'a');
+            m_tiles << new Tile(i/m_columns, i%m_columns, letter, 1.0, this);
+        }
         m_boardString += letter;
     }
 
@@ -85,7 +92,7 @@ void BoardLogic::setBoardString(const QString &str)
         qDeleteAll(m_tiles);
     m_tiles = QList<Tile*>();
     for(int i=0; i<str.length(); i++)
-        m_tiles << new Tile(i/m_columns, i%m_columns, str.at(i), this);
+        m_tiles << new Tile(i/m_columns, i%m_columns, str.at(i), m_letters?m_letters->scoreWord(str.at(i)):0, this);
 
     m_boardString = str;
     emit boardChanged();
@@ -135,7 +142,7 @@ void BoardLogic::updateBoardWords()
 QML_DECLARE_TYPE(BoardLogic);
 QML_DECLARE_TYPE(Tile);
 
-//C style strings used as extreme efficiency is required
+//C style strings used as extreme efficiency is desired
 const int CHARS_MAX=33;
 
 void BoardLogic::traverse(char string[CHARS_MAX], quint64 visited, short at){

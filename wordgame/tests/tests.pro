@@ -12,8 +12,8 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-HEADERS += ../boardlogic.h ../wordlist.h
-SOURCES += tst_wordgametest.cpp ../boardlogic.cpp ../wordlist.cpp
+HEADERS += ../boardlogic.h ../wordlist.h ../letters.h
+SOURCES += tst_wordgametest.cpp ../boardlogic.cpp ../wordlist.cpp ../letters.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 dicts.files = allwords.dict notwords.dict ../words.dict
 dicts.path = $$PWD

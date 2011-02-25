@@ -44,6 +44,7 @@
 
 #include <QtDeclarative>
 #include <QtCore/QStringList>
+class Letters;
 
 class Tile : public QObject
 {
@@ -53,16 +54,18 @@ class Tile : public QObject
     Q_PROPERTY(int row READ row CONSTANT);
     Q_PROPERTY(int column READ col CONSTANT);
     Q_PROPERTY(QString letter READ letter CONSTANT);
+    Q_PROPERTY(qreal score READ score REVISION 1 CONSTANT);
     //Selection state is controlled by the BoardLogic object, see search String
     Q_PROPERTY(bool selected READ isSelected NOTIFY selectedChanged);
 
 public:
-    Tile(int row,int col,QString letter, QObject* parent=0):
-        QObject(parent), m_row(row), m_col(col), m_letter(letter), m_selected(false) {}
+    Tile(int row,int col,QString letter, qreal score=1.0, QObject* parent=0):
+        QObject(parent), m_row(row), m_col(col), m_letter(letter), m_selected(false), m_score(score) {}
 
     int row() const { return m_row; }
     int col() const { return m_col; }
     QString letter() const { return m_letter; }
+    qreal score() const {return m_score; }
     bool isSelected() const { return m_selected; }
     void setSelected(bool s) { if(s == m_selected) return; m_selected = s; emit selectedChanged(); }
 signals:
@@ -72,6 +75,7 @@ private:
     int m_col;
     QString m_letter;
     bool m_selected;
+    qreal m_score;
 };
 
 class BoardLogic : public QObject,public QDeclarativeParserStatus
@@ -102,6 +106,8 @@ class BoardLogic : public QObject,public QDeclarativeParserStatus
     //searchStringFound is true when the searchString can be found in at least one place on the board.
     Q_PROPERTY(bool searchStringFound READ searchStringFound NOTIFY searchStringFoundChanged);
 
+    //A Letters object is how you can set the individual letter frequencies and score
+    Q_PROPERTY(Letters* letters READ letters WRITE setLetters NOTIFY lettersChanged REVISION 1);
 public slots:
     //Replaces the existing tiles with another, randomly selected, set of tiles.
     //By default it's called on component complete, unless you explicitly set boardString
@@ -109,7 +115,8 @@ public slots:
     //Returns true if and only if the given string can be found in both the word list and the board
     //Faster than testing those two individually.
     bool isValid(const QString& str);
-//END OF QML API
+    //END OF QML API
+
 public:
     int columns() const{return m_columns;}
     void setColumns(int c){if(c==m_columns) return; m_columns = c; emit columnsChanged();}
@@ -128,6 +135,9 @@ public:
 
     bool searchStringFound(){return m_searchStringFound;}
 
+    Letters* letters() const { return m_letters; }
+    void setLetters(Letters* arg) { if (m_letters != arg) { m_letters = arg; emit lettersChanged(arg); } }
+
     //Note that boardString and board have non-boilerplate methods
 signals:
     void rowsChanged();
@@ -137,6 +147,8 @@ signals:
     void boardChanged();
     void searchStringChanged();
     void searchStringFoundChanged();
+    Q_REVISION(1) void lettersChanged(Letters* arg);
+
 private:
     int m_columns;
     int m_rows;
@@ -146,16 +158,18 @@ private:
     QList<Tile*> m_tiles;
     QString m_boardString;
     bool m_searchStringFound;
+    Letters* m_letters;
 //end of boilerplate code
 public:
     BoardLogic(QObject* parent=0):
-        QObject(parent), m_columns(1), m_rows(1), m_wordCount(0)
+        QObject(parent), m_columns(1), m_rows(1), m_wordCount(0), m_letters(0)
     {}
 
     void setBoardString(const QString &);
     QString boardString();
     virtual void componentComplete();//pure virtual from QDeclarativeParserStatus, for costly initialization
     virtual void classBegin(){}//unused pure virtual from QDeclarativeParserStatus
+
 
 private slots:
     void updateSearchTiles();
