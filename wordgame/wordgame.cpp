@@ -58,6 +58,7 @@ void WordGame::registerTypes(const char *uri)
     QString moduleApiUri = moduleApiBaseUri + moduleApiNamespace;
     qmlRegisterModuleApi(moduleApiUri.toAscii().constData(), 1, 0, module_api_factory);
     qmlRegisterType<BoardLogic>(uri, 1, 0, "BoardLogic");
+    qmlRegisterType<BoardLogic,1>(uri,1,1,"BoardLogic");
     qmlRegisterType<Letters>(uri, 1, 1, "Letters");
     qmlRegisterUncreatableType<Tile>(uri,1,0,"Tile",Tile::tr("Only the BoardLogic element can generate tiles"));
 }
