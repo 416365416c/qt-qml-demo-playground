@@ -1,0 +1,7 @@
+Exercises left for the reader:
+-More Retro look
+-Modern look
+-The bonus saucer
+-The Authentic refire mode (requires another JS function)
+-Multiple levels
+-Projectile Collisions (this one's pretty darn easy given the helper function)
