@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += testlib declarative
+QT       += testlib declarative quick
 
 TARGET = tst_wordgametest
 CONFIG   += console

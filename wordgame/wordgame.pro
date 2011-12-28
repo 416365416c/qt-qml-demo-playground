@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET  = wordgame
-QT += declarative
+QT += declarative quick
 CONFIG += qt plugin
 
 TARGET = $$qtLibraryTarget($$TARGET)

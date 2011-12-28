@@ -37,7 +37,8 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-import Qt 4.7
+import QtQuick 2.0
+
 QtObject{
     property int textSize: 24
     property color textColor: "black"

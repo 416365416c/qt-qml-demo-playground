@@ -43,13 +43,20 @@
 #include "wordlist.h"
 #include "letters.h"
 
-void WordGame::initializeEngine(QDeclarativeEngine *engine, const char *uri)
+static QObject *module_api_factory(QDeclarativeEngine *engine, QJSEngine *scriptEngine)
 {
-    engine->rootContext()->setContextProperty("wordList", WordList::instance());
+   Q_UNUSED(engine)
+   Q_UNUSED(scriptEngine)
+   WordList *api = WordList::instance();
+   return api;
 }
 
 void WordGame::registerTypes(const char *uri)
 {
+    QLatin1String moduleApiBaseUri(uri);
+    QLatin1String moduleApiNamespace(".WordList");
+    QString moduleApiUri = moduleApiBaseUri + moduleApiNamespace;
+    qmlRegisterModuleApi(moduleApiUri.toAscii().constData(), 1, 0, module_api_factory);
     qmlRegisterType<BoardLogic>(uri, 1, 0, "BoardLogic");
     qmlRegisterType<Letters>(uri, 1, 1, "Letters");
     qmlRegisterUncreatableType<Tile>(uri,1,0,"Tile",Tile::tr("Only the BoardLogic element can generate tiles"));

@@ -53,11 +53,12 @@ class WordList : public QObject
        This object provides a set of functions that word games might need.
        They use a built in word list.
 
-       When you import the WordGame module, it is added as the 'wordList'
-       item in the root QML context.
+       When you import the WordGame module, it is registered into the
+       WordList import namespace as a module API.
     */
 public:
     explicit WordList(QObject *parent = 0);
+    ~WordList();
     static WordList *instance();
     bool isPartialWord(char*);//Convenience for the C style code
 signals:
