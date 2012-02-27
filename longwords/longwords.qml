@@ -110,7 +110,10 @@ Item{
         height: 320
         Repeater{
             model: logic.board
-            delegate: TileDelegate{property int tileSize: 64}
+            delegate: TileDelegate {
+                property int tileSize: 64
+                onClicked: input.text = input.text + letter
+            }
         }
     }
     MyLineEdit{
@@ -131,6 +134,16 @@ Item{
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: input.bottom
         anchors.topMargin: 16
+    }
+    Button{
+        id: done
+        opacity: logic.searchStringFound?1:0
+        Behavior on opacity{ NumberAnimation{}}
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: guide.bottom
+        anchors.topMargin: 16
+        text: "Done"
+        onClicked: {if(logic.searchStringFound) logic.endGame(); input.text="";}
     }
     Row{
         spacing: 8
