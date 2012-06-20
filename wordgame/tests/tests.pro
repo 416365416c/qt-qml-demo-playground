@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += testlib declarative quick
+QT       += testlib qml quick
 
 TARGET = tst_wordgametest
 CONFIG   += console

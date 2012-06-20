@@ -42,7 +42,7 @@
 #ifndef BOARDLOGIC_H
 #define BOARDLOGIC_H
 
-#include <QtDeclarative>
+#include <QtQml>
 #include <QtCore/QStringList>
 class Letters;
 
@@ -78,10 +78,10 @@ private:
     qreal m_score;
 };
 
-class BoardLogic : public QObject,public QDeclarativeParserStatus
+class BoardLogic : public QObject,public QQmlParserStatus
 {
     Q_OBJECT
-    Q_INTERFACES(QDeclarativeParserStatus)
+    Q_INTERFACES(QQmlParserStatus)
     /*
         For a board-based word game. If you don't have a board, don't make one of these.
         You can use WordList on its own for those cases.
@@ -96,7 +96,7 @@ class BoardLogic : public QObject,public QDeclarativeParserStatus
     //Setting this property allows you to use a specific, instead of random, board.
     Q_PROPERTY(QString boardString READ boardString WRITE setBoardString NOTIFY boardChanged);
     //A list of QObjects suitable for use as a model in QML
-    Q_PROPERTY(QDeclarativeListProperty<Tile> board READ board NOTIFY boardChanged);
+    Q_PROPERTY(QQmlListProperty<Tile> board READ board NOTIFY boardChanged);
     //A list of words in the board
     Q_PROPERTY(QStringList boardWords READ boardWords NOTIFY boardWordsChanged);
     //By setting a searchString, Tiles in board get updated to have 'selected' be set to true if and only if it is in
@@ -126,7 +126,7 @@ public:
 
     int wordCount() const{return m_wordCount;}
 
-    QDeclarativeListProperty<Tile> board() { return QDeclarativeListProperty<Tile>(this, m_tiles); }
+    QQmlListProperty<Tile> board() { return QQmlListProperty<Tile>(this, m_tiles); }
     QList<Tile*>* boardList(){ return &m_tiles; }//C++ convenience
     QStringList boardWords() const{return m_boardWords;}
 
@@ -167,8 +167,8 @@ public:
 
     void setBoardString(const QString &);
     QString boardString();
-    virtual void componentComplete();//pure virtual from QDeclarativeParserStatus, for costly initialization
-    virtual void classBegin(){}//unused pure virtual from QDeclarativeParserStatus
+    virtual void componentComplete();//pure virtual from QQmlParserStatus, for costly initialization
+    virtual void classBegin(){}//unused pure virtual from QQmlParserStatus
 
 
 private slots:

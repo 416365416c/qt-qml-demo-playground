@@ -38,8 +38,8 @@
 **
 ****************************************************************************/
 import QtQuick 2.0
-import Qt.labs.wordgame 1.0 as WordGame
-import Qt.labs.wordgame.WordList 1.0 as WordList
+import Qt.labs.wordgame 2.0 as WordGame
+import Qt.labs.wordgame.WordList 2.0 as WordList
 
 Item{
     id: root
