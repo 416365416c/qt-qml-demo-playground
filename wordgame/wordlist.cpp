@@ -68,7 +68,7 @@ WordList::~WordList()
 
 bool WordList::isPartialWord(const QString &c)
 {
-    return isPartialWord(c.toAscii().toLower().data());
+    return isPartialWord(c.toLatin1().toLower().data());
 }
 
 bool WordList::isWord(const QString &string)

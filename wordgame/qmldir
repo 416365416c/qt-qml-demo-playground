@@ -1,2 +1,3 @@
+module Qt.labs.wordgame
 plugin wordgame
 

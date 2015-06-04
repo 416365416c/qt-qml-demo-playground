@@ -66,9 +66,9 @@ Rectangle {
         GradientStop { position: 1.0; color: activePalette.button }
     }
 
-    MouseArea { id: mouseArea; anchors.fill: parent; onClicked: container.clicked() }
-
     Text {
         id: buttonLabel; text: container.text; anchors.centerIn: container; color: activePalette.buttonText
     }
+    MouseArea { id: mouseArea; anchors.fill: parent; onClicked: container.clicked() }
+
 }

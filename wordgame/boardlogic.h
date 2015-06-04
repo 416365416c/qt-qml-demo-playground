@@ -175,8 +175,8 @@ private slots:
     void updateSearchTiles();
     void updateBoardWords();
 
-private:
-    void traverse(char string[30], quint64 visited, short at);
+private: //string size should match CHARS_MAX
+    void traverse(const char string[33], quint64 visited, short at);
     bool selectionTraverse(char*, quint64 visited, short at, QSet<int>*);
     int translate(int,int,int);
     Q_DISABLE_COPY(BoardLogic)

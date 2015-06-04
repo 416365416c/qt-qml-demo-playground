@@ -44,10 +44,14 @@
 #include "boardlogic.h"
 #include "wordlist.h"
 #include "letters.h"
+//C style strings used as extreme efficiency is desired
+const int CHARS_MAX = 33;
+const char* sentinelWord = "";
+
 
 void BoardLogic::componentComplete(){
     //qDebug() << "Woohoo!  Now to do my costly initialization";
-    QTime time;
+    QTime time(0,0,0,0);
     qsrand(time.msecsTo(QTime::currentTime()));
     connect(this, SIGNAL(boardChanged()),
             this, SLOT(updateBoardWords()));
@@ -63,8 +67,8 @@ void BoardLogic::componentComplete(){
 
 void BoardLogic::regenerateBoard()
 {
-    if(m_tiles.count())
-        qDeleteAll(m_tiles);
+    foreach (Tile* t, m_tiles)
+        t->deleteLater();
     m_tiles = QList<Tile*>();
     m_boardString = QString();
     for(int i=0; i<m_rows*m_columns; i++){
@@ -116,7 +120,7 @@ void BoardLogic::updateSearchTiles()
 
     QSet<int> selectSet;
     for(int i=0; i<m_rows*m_columns; i++)
-        selectionTraverse(m_searchString.toLower().toAscii().data(), 0, i, &selectSet);
+        selectionTraverse(m_searchString.toLower().toLatin1().data(), 0, i, &selectSet);
 
     for(int i=0; i<m_rows*m_columns; i++)
         m_tiles.at(i)->setSelected(selectSet.contains(i));
@@ -133,7 +137,7 @@ void BoardLogic::updateBoardWords()
         return;
     }
     for(int i=0; i<m_rows*m_columns; i++)
-        traverse("",0,i);
+        traverse(sentinelWord,0,i);
 
     m_boardWords.sort();//Alphabetical order
     emit boardWordsChanged();
@@ -142,15 +146,12 @@ void BoardLogic::updateBoardWords()
 QML_DECLARE_TYPE(BoardLogic);
 QML_DECLARE_TYPE(Tile);
 
-//C style strings used as extreme efficiency is desired
-const int CHARS_MAX=33;
-
-void BoardLogic::traverse(char string[CHARS_MAX], quint64 visited, short at){
+void BoardLogic::traverse(const char string[CHARS_MAX], quint64 visited, short at){
     if (visited&(1<<at))
         return;
     visited |= 1<<at;
     char new_string[CHARS_MAX] = "";
-    sprintf(new_string,"%s%c",string,m_boardString.at(at).toLower().toAscii());
+    sprintf(new_string,"%s%c",string,m_boardString.at(at).toLower().toLatin1());
     if(!WordList::instance()->isPartialWord(new_string))
         return;
     QString newString(new_string);
@@ -174,7 +175,7 @@ bool BoardLogic::selectionTraverse(char* string, quint64 visited, short at, QSet
     if (visited&(1<<at))
         return false;
     visited |= 1<<at;
-    if(string[0] != m_tiles[at]->letter().at(0).toLower().toAscii())
+    if(string[0] != m_tiles[at]->letter().at(0).toLower().toLatin1())
         return false;
     bool valid = false;
     for(int i=-1;i<=1;i++){

@@ -39,7 +39,6 @@
 ****************************************************************************/
 import QtQuick 2.0
 import Qt.labs.wordgame 2.0 as WordGame
-import Qt.labs.wordgame.WordList 2.0 as WordList
 
 Item{
     id: root
@@ -69,7 +68,7 @@ Item{
         }
         function endGame(){
             if(!logic.searchStringFound){
-                if (WordList.isWord(searchString))
+                if (WordGame.WordList.isWord(searchString))
                     dialog.text = "That word is not in this board (although the word is a valid word)";
                 else
                     dialog.text = "That word is not in this board (and the word is not a valid word)";
@@ -158,7 +157,7 @@ Item{
         Button{
             anchors.margins: 4
             text: "Quit Game"
-            onClicked: Qt.quit();
+            onClicked: Qt.quit()
         }
     }
     Dialog{

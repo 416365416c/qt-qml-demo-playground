@@ -1,9 +1,10 @@
-To launch the game, open longwords.qml with the QML viewer application.
+To launch the game, open longwords.qml with the QML runtime. For example: "qml longwords.qml"
 
 You will need to have the WordGame module installed for this to work. If you get an error similar to the following when you try to run longwords.qml, then that module is not installed:
 file:///path/to/where/you/put/it/longwords/longwords.qml:41:1: module "Qt.labs.wordgame" is not installed
      import Qt.labs.wordgame 1.0 as WordGame
           ^
+Install the module using "make install" in the wordgame directory.
 
 Design notes
 ---

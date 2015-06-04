@@ -5,9 +5,9 @@ CONFIG += qt plugin
 
 TARGET = $$qtLibraryTarget($$TARGET)
 TARGETPATH = Qt/labs/wordgame.2
-target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
+target.path = $$[QT_INSTALL_QML]/$$TARGETPATH
 qmldir.files = qmldir
-qmldir.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
+qmldir.path = $$[QT_INSTALL_QML]/$$TARGETPATH
 INSTALLS += target qmldir
 
 # Input

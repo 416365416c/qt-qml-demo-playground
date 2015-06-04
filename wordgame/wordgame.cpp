@@ -53,10 +53,7 @@ static QObject *module_api_factory(QQmlEngine *engine, QJSEngine *scriptEngine)
 
 void WordGame::registerTypes(const char *uri)
 {
-    QLatin1String moduleApiBaseUri(uri);
-    QLatin1String moduleApiNamespace(".WordList");
-    QString moduleApiUri = moduleApiBaseUri + moduleApiNamespace;
-    qmlRegisterModuleApi<WordList>(moduleApiUri.toAscii().constData(), 2, 0, module_api_factory);
+    qmlRegisterSingletonType<WordList>(uri, 2, 0, "WordList", module_api_factory);
     qmlRegisterType<BoardLogic>(uri, 2, 0, "BoardLogic");
     qmlRegisterType<BoardLogic,2>(uri,2,2,"BoardLogic");
     qmlRegisterType<Letters>(uri, 2, 2, "Letters");

@@ -42,14 +42,17 @@ import QtQuick 2.0
 Item{
     id:dialog;
     opacity: 0
+    visible: false
     Behavior on opacity{NumberAnimation{}}
     property bool shown: opacity == 1; //can I mark this read-only?
     property alias text: dialogText.text
     function show(){
         dialog.opacity = 1;   
+        dialog.visible = true;
     }
     function hide(){
         dialog.opacity = 0;   
+        dialog.visible = false;
     }
     GameProps{id: props}
     Flickable{
