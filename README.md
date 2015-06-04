@@ -1,6 +1,6 @@
 # qt-qml-demo-playground
 
-There are a lot of fun QML demos that just don't make the cut for Qt's high quality standards. And no matter how many particles you dress it up in, rock-paper-scissors is too lowest common denominator. But I'll dump my stuff here!
+There are a lot of fun QML demos that just don't make the cut for Qt's high quality standards. And no matter how many particles you dress it up in, rock-paper-scissors is too lowest common denominator. But as long as git repositories are free, it's worth keeping a copy around.
 
 ## Contents Summary
 * devdays13 - My Presentation(s) from devdays 2013
