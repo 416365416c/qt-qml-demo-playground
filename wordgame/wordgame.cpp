@@ -43,19 +43,22 @@
 #include "wordlist.h"
 #include "letters.h"
 
-void WordGame::initializeEngine(QDeclarativeEngine *engine, const char *uri)
+static QObject *module_api_factory(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
-    engine->rootContext()->setContextProperty("wordList", WordList::instance());
+   Q_UNUSED(engine)
+   Q_UNUSED(scriptEngine)
+   WordList *api = WordList::instance();
+   return api;
 }
 
 void WordGame::registerTypes(const char *uri)
 {
-    qmlRegisterType<BoardLogic>(uri, 1, 0, "BoardLogic");
-    qmlRegisterType<BoardLogic,1>(uri,1,1,"BoardLogic");
-    qmlRegisterType<Letters>(uri, 1, 1, "Letters");
-    qmlRegisterUncreatableType<Tile>(uri,1,0,"Tile",Tile::tr("Only the BoardLogic element can generate tiles"));
+    QLatin1String moduleApiBaseUri(uri);
+    QLatin1String moduleApiNamespace(".WordList");
+    QString moduleApiUri = moduleApiBaseUri + moduleApiNamespace;
+    qmlRegisterModuleApi<WordList>(moduleApiUri.toAscii().constData(), 2, 0, module_api_factory);
+    qmlRegisterType<BoardLogic>(uri, 2, 0, "BoardLogic");
+    qmlRegisterType<BoardLogic,2>(uri,2,2,"BoardLogic");
+    qmlRegisterType<Letters>(uri, 2, 2, "Letters");
+    qmlRegisterUncreatableType<Tile>(uri,2,0,"Tile",Tile::tr("Only the BoardLogic element can generate tiles"));
 }
-
-
-Q_EXPORT_PLUGIN(WordGame);
-

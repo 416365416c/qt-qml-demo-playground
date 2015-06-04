@@ -37,8 +37,9 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-import Qt 4.7
-import Qt.labs.wordgame 1.0 as WordGame
+import QtQuick 2.0
+import Qt.labs.wordgame 2.0 as WordGame
+import Qt.labs.wordgame.WordList 2.0 as WordList
 
 Item{
     id: root
@@ -68,7 +69,10 @@ Item{
         }
         function endGame(){
             if(!logic.searchStringFound){
-                dialog.text = "That word is not in this board.";
+                if (WordList.isWord(searchString))
+                    dialog.text = "That word is not in this board (although the word is a valid word)";
+                else
+                    dialog.text = "That word is not in this board (and the word is not a valid word)";
                 dialog.show();
             } else if(!logic.isValid(input.text)){
                 dialog.text = "That is not a valid word.";

@@ -1,10 +1,10 @@
 TEMPLATE = lib
 TARGET  = wordgame
-QT += declarative
+QT += qml quick
 CONFIG += qt plugin
 
 TARGET = $$qtLibraryTarget($$TARGET)
-TARGETPATH = Qt/labs/wordgame
+TARGETPATH = Qt/labs/wordgame.2
 target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
 qmldir.files = qmldir
 qmldir.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH

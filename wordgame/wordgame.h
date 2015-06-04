@@ -42,16 +42,16 @@
 #ifndef WORDGAME_H
 #define WORDGAME_H
 
-#include <QtDeclarative/qdeclarative.h>
-#include <QtDeclarative/QDeclarativeExtensionPlugin>
+#include <QtQml/qqml.h>
+#include <QtQml/QQmlExtensionPlugin>
 
-class WordGame : public QDeclarativeExtensionPlugin
+class WordGame : public QQmlExtensionPlugin
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qt-project.labs.WordGame/2.0")
 
 public:
     void registerTypes(const char *uri);
-    void initializeEngine ( QDeclarativeEngine * engine, const char * uri );
 };
 
 #endif // WORDGAME_H

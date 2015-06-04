@@ -62,6 +62,11 @@ WordList* WordList::instance()
     return m_instance;
 }
 
+WordList::~WordList()
+{
+    m_instance = 0;
+}
+
 bool WordList::isPartialWord(const QString &c)
 {
     return isPartialWord(c.toAscii().toLower().data());

@@ -39,7 +39,7 @@
 ****************************************************************************/
 
 #include <QtCore/QTime>
-#include <QtDeclarative/qdeclarative.h>
+#include <QtQml/qqml.h>
 
 #include "boardlogic.h"
 #include "wordlist.h"
