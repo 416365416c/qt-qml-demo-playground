@@ -71,7 +71,7 @@ Item {
         sizeVariation: 16
         endSize: 16
 
-        speed: AngleDirection {angleVariation:360; magnitudeVariation: 32}
+        velocity: AngleDirection {angleVariation:360; magnitudeVariation: 32}
     }
     Emitter {
         system: container.system

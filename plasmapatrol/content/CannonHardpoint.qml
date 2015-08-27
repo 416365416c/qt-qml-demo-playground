@@ -88,7 +88,7 @@ Item {
         emitRate: 1
         size: 8
         endSize: 4
-        speed: TargetDirection {
+        velocity: TargetDirection {
             id: blastVector
             targetX: target.x; targetY: target.y; magnitude: 1.1; proportionalMagnitude: true
         }

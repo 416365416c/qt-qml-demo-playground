@@ -70,7 +70,7 @@ Rectangle {
         //General Children
         Image {
             anchors.centerIn: parent
-            source: "../images/finalfrontier.png"
+            source: "content/pics/finalfrontier.png"
         }
         ParticleSystem {
             id: particles
@@ -103,7 +103,7 @@ Rectangle {
                         size: 16
                         endSize: 0
                         sizeVariation: 8
-                        speed: AngleDirection {angleVariation:360; magnitudeVariation: 6}
+                        velocity: AngleDirection {angleVariation:360; magnitudeVariation: 6}
                     }
                 }
                 Button {

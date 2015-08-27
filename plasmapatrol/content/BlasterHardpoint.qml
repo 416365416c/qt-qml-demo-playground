@@ -59,7 +59,7 @@ Item {
         enabled: show
         anchors.fill: parent
         shape: EllipseShape {}
-        speed: TargetDirection { targetX: width/2; targetY: width/2; magnitude: -1; proportionalMagnitude: true}
+        velocity: TargetDirection { targetX: width/2; targetY: width/2; magnitude: -1; proportionalMagnitude: true}
         lifeSpan: 1000
         emitRate: 64 
 
@@ -124,7 +124,7 @@ Item {
         size: 24
         endSize:16
         sizeVariation: 8
-        speed: TargetDirection {
+        velocity: TargetDirection {
             id: blastVector
             targetX: target.x; targetY: target.y; magnitude: 1.1; proportionalMagnitude: true
         }

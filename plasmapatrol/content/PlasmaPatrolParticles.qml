@@ -149,7 +149,7 @@ Item {
         follow: "cannon"
         emitRatePerParticle: 64
         lifeSpan: 600
-        speed: AngleDirection { angleVariation: 360; magnitude: 48}
+        velocity: AngleDirection { angleVariation: 360; magnitude: 48}
         size: 16
         endSize: 8
         sizeVariation: 2

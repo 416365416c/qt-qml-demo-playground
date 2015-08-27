@@ -55,7 +55,7 @@ Item {
         anchors.fill: parent
         enabled: container.show
         shape: EllipseShape {}
-        speed: TargetDirection { targetX: width/2; targetY: width/2; magnitude: -1; proportionalMagnitude: true }
+        velocity: TargetDirection { targetX: width/2; targetY: width/2; magnitude: -1; proportionalMagnitude: true }
         lifeSpan: 1000
         emitRate: 64
 
@@ -102,6 +102,6 @@ Item {
         size: 16
         endSize: 0
 
-        speed: PointDirection {xVariation: 4; yVariation: 4}
+        velocity: PointDirection {xVariation: 4; yVariation: 4}
     }
 }
